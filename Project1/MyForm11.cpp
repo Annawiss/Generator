@@ -95,7 +95,15 @@ System::Void Project1::MyForm11::loadFile_Click(System::Object^ sender, System::
 		canCreateGraph = true;
 		String^ file = openEnterFile->FileName;
 		DataSet^ ds = gcnew DataSet();
-		ds->ReadXml(file);
+		try {
+			ds->ReadXml(file);
+		}
+		catch (...)
+		{
+			System::Windows::Forms::MessageBox::Show("Ошибка при чтении файла");
+			canCreateGraph = false;
+			return;
+		}
 		for (int i = 0; i < ds->Tables->Count; ++i)
 		{
 			for (int j = 0; j < ds->Tables[i]->Rows->Count; ++j) {
@@ -107,7 +115,7 @@ System::Void Project1::MyForm11::loadFile_Click(System::Object^ sender, System::
 				{
 					System::Windows::Forms::MessageBox::Show("Ошибка при чтении файла");
 					canCreateGraph = false;
-					break;
+					return;
 				}
 			}
 		}
@@ -178,7 +186,7 @@ System::Void Project1::MyForm11::generateButton_Click(System::Object^ sender, Sy
 					catch (...)
 					{
 						System::Windows::Forms::MessageBox::Show("Ошибка при записи в файл");
-						break;
+						return;
 					}
 				}
 				System::Windows::Forms::MessageBox::Show("Программа закончила добавление графов");
@@ -209,7 +217,7 @@ System::Void Project1::MyForm11::generateButton_Click(System::Object^ sender, Sy
 					catch (...)
 					{
 						System::Windows::Forms::MessageBox::Show("Ошибка при записи в файл");
-						break;
+						return;
 					}
 				}
 				System::Windows::Forms::MessageBox::Show("Программа закончила добавление графов");
@@ -236,7 +244,7 @@ System::Void Project1::MyForm11::generateButton_Click(System::Object^ sender, Sy
 						catch (...)
 						{
 							System::Windows::Forms::MessageBox::Show("Ошибка при записи в файл");
-							break;
+							return;
 						}
 					}
 					System::Windows::Forms::MessageBox::Show("Программа закончила добавление графов");
