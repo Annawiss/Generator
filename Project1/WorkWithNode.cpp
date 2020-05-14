@@ -64,6 +64,10 @@ namespace Project1 {
         newNode.cycleNumber = graph[numberOfNode].cycleNumber;
         newNode.edges.push_back(numberOfNode);
         graph[numberOfNode].edges.push_back(newNode.number);
+        if (graph[numberOfNode].edges.size() >= 2) {
+            graph[numberOfNode].allowToAddEdge = false;
+            graph[numberOfNode].allowToAddEdge = false;
+        }
         graph.push_back(newNode);
     }
 
@@ -80,12 +84,14 @@ namespace Project1 {
             return false;
         }
         graph[firstNode].edges.push_back(lastNode);
-        if (graph[firstNode].edges.size() == 3) {
+        if (graph[firstNode].edges.size() >= 2) {
             graph[firstNode].allowToAddEdge = false;
+            graph[firstNode].allowToAddCycle = false;
         }
         graph[lastNode].edges.push_back(firstNode);
-        if (graph[lastNode].edges.size() == 3) {
+        if (graph[lastNode].edges.size() >= 2) {
             graph[lastNode].allowToAddEdge = false;
+            graph[lastNode].allowToAddCycle = false;
         }
         return true;
     }
